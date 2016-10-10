@@ -1,12 +1,10 @@
 package com.yoclabo.minecraft;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nullable;
 
+import com.yoclabo.minecraft.Entity_Sticky_Arrow.ArrowType;
+
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -29,6 +27,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class Item_PredatorBow extends Item {
+
+    private ArrowType type;
+
+    public void SetArrowType(ArrowType arg) {
+        type = arg;
+    }
 
     public Item_PredatorBow() {
         this.maxStackSize = 1;
@@ -73,10 +77,6 @@ public class Item_PredatorBow extends Item {
                         }
                     }
                 });
-
-        arrows = new ArrayList<ReleasedArrow>();
-        lastArrowID = 0;
-        ticksForMe = 0;
     }
 
     /**
@@ -119,7 +119,7 @@ public class Item_PredatorBow extends Item {
 
                     if (!world.isRemote) {
 
-                        EntityArrow arrowEntity = this.PrepareArrow(
+                        Entity_Sticky_Arrow arrowEntity = this.PrepareArrow(
                                 world,
                                 player,
                                 bowItem,
@@ -231,20 +231,14 @@ public class Item_PredatorBow extends Item {
         }
     }
 
-    private EntityArrow PrepareArrow(
+    private Entity_Sticky_Arrow PrepareArrow(
             World world,
             EntityPlayer player,
             ItemStack bowItem,
             ItemStack arrowItem,
             float arrowVelocity,
             boolean canRecycle) {
-        ItemArrow arrowCreator = null;
-        if (arrowItem.getItem() instanceof ItemArrow) {
-            arrowCreator = (ItemArrow) arrowItem.getItem();
-        } else {
-            arrowCreator = (ItemArrow) Items.ARROW;
-        }
-        EntityArrow arrowEntity = arrowCreator.createArrow(world, arrowItem, player);
+        Entity_Sticky_Arrow arrowEntity = new Entity_Sticky_Arrow(world, arrowItem, player);
         arrowEntity.setAim(
                 player,
                 player.rotationPitch,
@@ -269,15 +263,8 @@ public class Item_PredatorBow extends Item {
         return arrowEntity;
     }
 
-    private void CastArrow(World world, EntityArrow arrowEntity) {
+    private void CastArrow(World world, Entity_Sticky_Arrow arrowEntity) {
         world.spawnEntityInWorld(arrowEntity);
-
-        ReleasedArrow addArrow = new ReleasedArrow();
-        addArrow.SetArrow(arrowEntity);
-        addArrow.SetID(lastArrowID);
-        addArrow.SetTicksReleased(ticksForMe);
-
-        lastArrowID += 1;
     }
 
     /**
@@ -312,78 +299,6 @@ public class Item_PredatorBow extends Item {
      */
     public int getItemEnchantability() {
         return 1;
-    }
-
-    @Override
-    public void onUpdate(ItemStack bowItem, World world, Entity entityIn, int itemSlot, boolean isSelected) {
-        ticksForMe++;
-        super.onUpdate(bowItem, world, entityIn, itemSlot, isSelected);
-        for (ReleasedArrow item : arrows) {
-            if (item.ArrowActive()) {
-                if (item.GetTicksReleased() + 100 < ticksForMe) {
-                    this.ArrowExplode(world, item);
-                }
-            }
-        }
-    }
-
-    private void ArrowExplode(World world, ReleasedArrow item) {
-        world.createExplosion(
-                item.GetArrow(),
-                item.GetArrow().posX,
-                item.GetArrow().posY,
-                item.GetArrow().posZ,
-                3,
-                true);
-        item.GetArrow().setDead();
-    }
-
-    private List<ReleasedArrow> arrows;
-
-    private int lastArrowID;
-
-    private long ticksForMe;
-
-    private class ReleasedArrow {
-
-        private EntityArrow arrow;
-
-        public void SetArrow(EntityArrow arg) {
-            arrow = arg;
-        }
-
-        public EntityArrow GetArrow() {
-            return arrow;
-        }
-
-        private int id;
-
-        public void SetID(int arg) {
-            id = arg;
-        }
-
-        public int GetID() {
-            return id;
-        }
-
-        private long ticksReleased;
-
-        public void SetTicksReleased(long arg) {
-            ticksReleased = arg;
-        }
-
-        public long GetTicksReleased() {
-            return ticksReleased;
-        }
-
-        public boolean ArrowActive() {
-            if (arrow != null && !arrow.isDead) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
     }
 
 }

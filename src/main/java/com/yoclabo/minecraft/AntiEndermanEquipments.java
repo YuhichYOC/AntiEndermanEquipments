@@ -13,7 +13,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
 @Mod(modid = AntiEndermanEquipments.MOD_ID, name = AntiEndermanEquipments.MOD_ID, version = AntiEndermanEquipments.VERSION)
 public class AntiEndermanEquipments {
@@ -76,11 +75,11 @@ public class AntiEndermanEquipments {
         String patternStr;
         Pattern p;
         Matcher m;
-        patternStr = "(Command|Comm|comm|com)( +)((Marshal|marshal|m)( +)(.*))";
+        patternStr = "(Command|Comm|comm|com)( +)((Process|process|p)( +)(.*))";
         p = Pattern.compile(patternStr);
         m = p.matcher(e.getMessage());
         if (m.find()) {
-            // Command_Marshal.processMessage(m.group(3), player);
+            Command_PredatorBow.processMessage(m.group(3), player);
         }
     }
 
