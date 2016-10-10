@@ -1,5 +1,6 @@
 package com.yoclabo.minecraft;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -143,37 +144,37 @@ public class Entity_Sticky_Arrow extends EntityTippedArrow {
                     case ABOVE:
                         BlockPos posUpside = new BlockPos(ePosX + i, ePosY + acLockRange, ePosZ + j);
                         if (this.worldObj.isAirBlock(posUpside)) {
-                            this.worldObj.setBlockState(posUpside, (IBlockState) Blocks.GLASS.getBlockState());
+                            this.worldObj.setBlockState(posUpside, Blocks.GLASS.getDefaultState());
                         }
                         break;
                     case FRONT:
                         BlockPos posFront = new BlockPos(ePosX + acLockRange, ePosY + i, ePosZ + j);
                         if (this.worldObj.isAirBlock(posFront)) {
-                            this.worldObj.setBlockState(posFront, (IBlockState) Blocks.GLASS.getBlockState());
+                            this.worldObj.setBlockState(posFront, Blocks.GLASS.getDefaultState());
                         }
                         break;
                     case REAR:
                         BlockPos posBack = new BlockPos(ePosX - acLockRange, ePosY + i, ePosZ + j);
                         if (this.worldObj.isAirBlock(posBack)) {
-                            this.worldObj.setBlockState(posBack, (IBlockState) Blocks.GLASS.getBlockState());
+                            this.worldObj.setBlockState(posBack, Blocks.GLASS.getDefaultState());
                         }
                         break;
                     case LEFT:
                         BlockPos posLeft = new BlockPos(ePosX + i, ePosY + j, ePosZ + acLockRange);
                         if (this.worldObj.isAirBlock(posLeft)) {
-                            this.worldObj.setBlockState(posLeft, (IBlockState) Blocks.GLASS.getBlockState());
+                            this.worldObj.setBlockState(posLeft, Blocks.GLASS.getDefaultState());
                         }
                         break;
                     case RIGHT:
                         BlockPos posRight = new BlockPos(ePosX + i, ePosY + j, ePosZ - acLockRange);
                         if (this.worldObj.isAirBlock(posRight)) {
-                            this.worldObj.setBlockState(posRight, (IBlockState) Blocks.GLASS.getBlockState());
+                            this.worldObj.setBlockState(posRight, Blocks.GLASS.getDefaultState());
                         }
                         break;
                     case BELOW:
                         BlockPos posBelow = new BlockPos(ePosX + i, ePosY - acLockRange, ePosZ + j);
                         if (this.worldObj.isAirBlock(posBelow)) {
-                            this.worldObj.setBlockState(posBelow, (IBlockState) Blocks.GLASS.getBlockState());
+                            this.worldObj.setBlockState(posBelow, Blocks.GLASS.getDefaultState());
                         }
                     }
                 }
@@ -197,7 +198,7 @@ public class Entity_Sticky_Arrow extends EntityTippedArrow {
     private void TryToIgnition(int posX, int posY, int posZ) {
         BlockPos pos = new BlockPos(posX, posY, posZ);
         if (this.worldObj.isAirBlock(pos)) {
-            this.worldObj.setBlockState(pos, (IBlockState) Blocks.FIRE.getBlockState());
+            this.worldObj.setBlockState(pos, Blocks.FIRE.getDefaultState(), 11);
         }
     }
 
