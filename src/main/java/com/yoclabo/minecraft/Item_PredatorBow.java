@@ -36,7 +36,7 @@ public class Item_PredatorBow extends Item {
 
     public Item_PredatorBow() {
         this.maxStackSize = 1;
-        this.setMaxDamage(384);
+        this.setMaxDamage(999);
         this.setCreativeTab(AntiEndermanEquipments.t);
         this.addPropertyOverride(
                 new ResourceLocation(
