@@ -77,6 +77,7 @@ public class Item_PredatorBow extends Item {
                         }
                     }
                 });
+        type = ArrowType.NORMAL;
     }
 
     /**
@@ -239,6 +240,7 @@ public class Item_PredatorBow extends Item {
             float arrowVelocity,
             boolean canRecycle) {
         Entity_Sticky_Arrow arrowEntity = new Entity_Sticky_Arrow(world, arrowItem, player);
+        arrowEntity.SetArrowType(type);
         arrowEntity.setAim(
                 player,
                 player.rotationPitch,
