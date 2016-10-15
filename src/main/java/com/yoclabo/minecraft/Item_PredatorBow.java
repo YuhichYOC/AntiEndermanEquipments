@@ -297,7 +297,7 @@ public class Item_PredatorBow extends Item {
         int powerBoost = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, bowItem);
         if (powerBoost > 0) {
             arrowEntity.setDamage(
-                    arrowEntity.getDamage() + (double) powerBoost * 0.5D + 0.5D + (double) overriddenAttackPower);
+                    arrowEntity.getDamage() + (double) powerBoost * 0.5D + 0.5D);
         }
         int knockBackBoost = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, bowItem);
         if (knockBackBoost > 0) {
@@ -306,6 +306,7 @@ public class Item_PredatorBow extends Item {
         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, bowItem) > 0) {
             arrowEntity.setFire(100);
         }
+        arrowEntity.setDamage(arrowEntity.getDamage() + overriddenAttackPower);
         arrowEntity.SetKnockBackWeight(overriddenKnockBackWeight);
         return arrowEntity;
     }

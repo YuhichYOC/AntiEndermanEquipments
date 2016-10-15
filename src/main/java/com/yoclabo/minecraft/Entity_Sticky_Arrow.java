@@ -99,6 +99,9 @@ public class Entity_Sticky_Arrow extends EntityTippedArrow {
     }
 
     private void BlowAway(Entity hit) {
+        if (hit == null) {
+            return;
+        }
         int boost = knockBackWeight;
         if (type == ArrowType.HIIMPACT) {
             boost *= 3;
@@ -127,6 +130,9 @@ public class Entity_Sticky_Arrow extends EntityTippedArrow {
     }
 
     private void LockIn() {
+        if (entityForLockin == null) {
+            return;
+        }
         CreateWall(WallDirection.ABOVE);
         CreateWall(WallDirection.FRONT);
         CreateWall(WallDirection.REAR);

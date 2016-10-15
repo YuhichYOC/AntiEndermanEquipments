@@ -31,7 +31,7 @@ public class AntiEndermanEquipments {
         return creativetab;
     }
 
-    private static Item_PredatorBow m_PBOW;
+    protected static Item_PredatorBow m_PBOW;
 
     public Item_PredatorBow GetPBOW() {
         return m_PBOW;
@@ -120,6 +120,7 @@ public class AntiEndermanEquipments {
 
     private void SetCPBOW() {
         m_CPBOW = new Command_PredatorBow();
+        m_CPBOW.InitIntMode();
     }
 
     @net.minecraftforge.fml.common.Mod.EventHandler
@@ -273,12 +274,13 @@ public class AntiEndermanEquipments {
         m = p.matcher(e.getMessage());
         if (m.find()) {
             m_CPBOW.processMessage(m.group(3), player);
+            return;
         }
         patternStr = "(Command|Comm|comm|com)";
         p = Pattern.compile(patternStr);
         m = p.matcher(e.getMessage());
-        if (m.find()) {
-
+        if (m.find() || m_CPBOW.IsIntMode()) {
+            m_CPBOW.processMessageInteractive(e.getMessage(), player);
         }
     }
 

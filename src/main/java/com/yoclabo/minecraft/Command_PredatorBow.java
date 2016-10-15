@@ -33,26 +33,27 @@ public class Command_PredatorBow extends CommandBase {
         Pattern p = Pattern.compile(patternStr);
         Matcher m = p.matcher(args);
         if (m.find()) {
+            currentMode = IntMode.INIT;
             if (m.group(5).equals("normal") || m.group(5).equals("n")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.NORMAL);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.NORMAL);
                 this.DisplayMessage(msgCA_N, player);
             } else if (m.group(5).equals("split") || m.group(5).equals("s")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.SPLIT);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.SPLIT);
                 this.DisplayMessage(msgCA_S, player);
             } else if (m.group(5).equals("hiimpact") || m.group(5).equals("h")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.HIIMPACT);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.HIIMPACT);
                 this.DisplayMessage(msgCA_H, player);
             } else if (m.group(5).equals("airburst") || m.group(5).equals("a")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.AIRBURST);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.AIRBURST);
                 this.DisplayMessage(msgCA_A, player);
             } else if (m.group(5).equals("napalm") || m.group(5).equals("n")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.NAPALM);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.NAPALM);
                 this.DisplayMessage(msgCA_NP, player);
             } else if (m.group(5).equals("lockin") || m.group(5).equals("l")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.LOCKIN);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.LOCKIN);
                 this.DisplayMessage(msgCA_L, player);
             } else {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.NORMAL);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.NORMAL);
                 this.DisplayMessage(msgCA_N, player);
             }
         }
@@ -111,25 +112,25 @@ public class Command_PredatorBow extends CommandBase {
         if (m.find()) {
             currentMode = IntMode.INIT;
             if (m.group(2).equals("Normal") || m.group(2).equals("n")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.NORMAL);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.NORMAL);
                 this.DisplayMessage(msgCA_N, player);
-            } else if (m.group(2).equals("split") || m.group(5).equals("s")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.SPLIT);
+            } else if (m.group(2).equals("split") || m.group(2).equals("s")) {
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.SPLIT);
                 this.DisplayMessage(msgCA_S, player);
-            } else if (m.group(2).equals("hiimpact") || m.group(5).equals("h")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.HIIMPACT);
+            } else if (m.group(2).equals("hiimpact") || m.group(2).equals("h")) {
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.HIIMPACT);
                 this.DisplayMessage(msgCA_H, player);
-            } else if (m.group(2).equals("airburst") || m.group(5).equals("a")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.AIRBURST);
+            } else if (m.group(2).equals("airburst") || m.group(2).equals("a")) {
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.AIRBURST);
                 this.DisplayMessage(msgCA_A, player);
-            } else if (m.group(2).equals("napalm") || m.group(5).equals("n")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.NAPALM);
+            } else if (m.group(2).equals("napalm") || m.group(2).equals("n")) {
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.NAPALM);
                 this.DisplayMessage(msgCA_NP, player);
-            } else if (m.group(2).equals("lockin") || m.group(5).equals("l")) {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.LOCKIN);
+            } else if (m.group(2).equals("lockin") || m.group(2).equals("l")) {
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.LOCKIN);
                 this.DisplayMessage(msgCA_L, player);
             } else {
-                AntiEndermanEquipments.thisMod.GetPBOW().SetArrowType(ArrowType.NORMAL);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetArrowType(ArrowType.NORMAL);
                 this.DisplayMessage(msgCA_N, player);
             }
         }
@@ -161,7 +162,7 @@ public class Command_PredatorBow extends CommandBase {
             int power = Integer.parseInt(m.group(2));
             if (1 <= power && power <= 255) {
                 currentMode = IntMode.INIT;
-                AntiEndermanEquipments.thisMod.GetPBOW().SetOverriddenAttackPower(power);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetOverriddenAttackPower(power);
                 String msg = msgPBA_2;
                 msg += Integer.toString(power) + ".";
                 this.DisplayMessage(msg, player);
@@ -175,9 +176,9 @@ public class Command_PredatorBow extends CommandBase {
         Matcher m = p.matcher(args);
         if (m.find()) {
             int power = Integer.parseInt(m.group(2));
-            if (3 <= power && power <= 30) {
+            if (1 <= power && power <= 30) {
                 currentMode = IntMode.INIT;
-                AntiEndermanEquipments.thisMod.GetPBOW().SetOverriddenArrowVelocity(power);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetOverriddenArrowVelocity(power);
                 String msg = msgPBV_2;
                 msg += Integer.toString(power) + ".";
                 this.DisplayMessage(msg, player);
@@ -193,7 +194,7 @@ public class Command_PredatorBow extends CommandBase {
             int power = Integer.parseInt(m.group(2));
             if (3 <= power && power <= 40) {
                 currentMode = IntMode.INIT;
-                AntiEndermanEquipments.thisMod.GetPBOW().SetOverriddenKnockBackWeight(power);
+                AntiEndermanEquipments.thisMod.m_PBOW.SetOverriddenKnockBackWeight(power);
                 String msg = msgPBK_2;
                 msg += Integer.toString(power);
                 this.DisplayMessage(msg, player);
@@ -242,6 +243,18 @@ public class Command_PredatorBow extends CommandBase {
 
     private IntMode currentMode;
 
+    public boolean IsIntMode() {
+        if (currentMode != IntMode.INIT) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void InitIntMode() {
+        currentMode = IntMode.INIT;
+    }
+
     private static final String msgSTARTED_1 = "Interactive mode started.";
     private static final String msgSTARTED_2 = "to setup the Bow type \"Predator Bow\". ( shortcut = pb )";
     private static final String msgSETPB_1 = "Predator Bow setup.";
@@ -254,7 +267,7 @@ public class Command_PredatorBow extends CommandBase {
     private static final String msgPBCDW_3 = "to change Knock back weight \"Knock\"( k )";
     private static final String msgPBA_1 = "type Attack power ( 1 - 255 )";
     private static final String msgPBA_2 = "Attack power set to ";
-    private static final String msgPBV_1 = "type Arrow velocity ( 3 - 30 )";
+    private static final String msgPBV_1 = "type Arrow velocity ( 1 - 30 )";
     private static final String msgPBV_2 = "Arrow velocity set to ";
     private static final String msgPBK_1 = "type Knock back weight ( 3 - 40 )";
     private static final String msgPBK_2 = "Knock back weight set to ";
