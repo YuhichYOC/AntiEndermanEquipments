@@ -1,7 +1,5 @@
 package com.yoclabo.minecraft;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityTippedArrow;
@@ -94,19 +92,28 @@ public class Entity_Sticky_Arrow extends EntityTippedArrow {
             this.setDead();
             break;
         default:
+            this.BlowAway(hit);
             break;
         }
         super.onHit(raytraceResultIn);
     }
 
     private void BlowAway(Entity hit) {
+        int boost = knockBackWeight;
+        if (type == ArrowType.HIIMPACT) {
+            boost *= 3;
+        }
         double eMX = hit.motionX;
         double eMY = hit.motionY;
         double eMZ = hit.motionZ;
-        double aMX = this.motionX * knockBackWeight;
-        double aMY = this.motionY * knockBackWeight;
-        double aMZ = this.motionZ * knockBackWeight;
-        hit.setVelocity(eMX + (aMX / 3), eMY + (aMY / 3), eMZ + (aMZ / 3));
+        double aMX = this.motionX * boost;
+        double aMY = this.motionY * boost;
+        double aMZ = this.motionZ * boost;
+        if (type == ArrowType.HIIMPACT) {
+            hit.setVelocity(eMX + (aMX / 3), eMY + (aMY * 2), eMZ + (aMZ / 3));
+        } else {
+            hit.setVelocity(eMX + (aMX / 3), eMY + (aMY / 3), eMZ + (aMZ / 3));
+        }
     }
 
     private void Explode() {

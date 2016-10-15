@@ -34,50 +34,93 @@ public class Item_PredatorBow extends Item {
         type = arg;
     }
 
+    private int overriddenAttackPower;
+
+    public void SetOverriddenAttackPower(int arg) {
+        overriddenAttackPower = arg;
+    }
+
+    private int overriddenArrowVelocity;
+
+    public void SetOverriddenArrowVelocity(int arg) {
+        overriddenArrowVelocity = arg;
+    }
+
+    private int overriddenKnockBackWeight;
+
+    public void SetOverriddenKnockBackWeight(int arg) {
+        overriddenKnockBackWeight = arg;
+    }
+
+    private int explosiveRange;
+
+    public void SetExplosiveRange(int arg) {
+        explosiveRange = arg;
+    }
+
+    private int ignitionRange;
+
+    public void SetIgnitionRange(int arg) {
+        ignitionRange = arg;
+    }
+
+    private int lockRange;
+
+    public void SetLockRange(int arg) {
+        lockRange = arg;
+    }
+
+    private int wallThickness;
+
+    public void SetWallThickness(int arg) {
+        wallThickness = arg;
+    }
+
     public Item_PredatorBow() {
         this.maxStackSize = 1;
         this.setMaxDamage(999);
-        this.setCreativeTab(AntiEndermanEquipments.t);
-        this.addPropertyOverride(
-                new ResourceLocation(
-                        "predatorbow",
-                        "pull"),
-                new IItemPropertyGetter() {
-                    @SideOnly(Side.CLIENT)
-                    public float apply(
-                            ItemStack stack,
-                            @Nullable World worldIn,
-                            @Nullable EntityLivingBase entityIn) {
-                        if (entityIn == null) {
-                            return 0.0F;
-                        } else {
-                            ItemStack itemstack = entityIn.getActiveItemStack();
-                            if (itemstack != null && itemstack.getItem() == Items.BOW) {
-                                return (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F;
-                            } else {
-                                return 0.0F;
-                            }
-                        }
+
+        ResourceLocation pullrl = new ResourceLocation("predatorbow", "pull");
+        IItemPropertyGetter pullProp = new IItemPropertyGetter() {
+            @SideOnly(Side.CLIENT)
+            public float apply(
+                    ItemStack stack,
+                    @Nullable World worldIn,
+                    @Nullable EntityLivingBase entityIn) {
+                if (entityIn == null) {
+                    return 0.0F;
+                } else {
+                    ItemStack itemstack = entityIn.getActiveItemStack();
+                    if (itemstack != null && itemstack.getItem() == Items.BOW) {
+                        return (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F;
+                    } else {
+                        return 0.0F;
                     }
-                });
-        this.addPropertyOverride(
-                new ResourceLocation(
-                        "predatorbow",
-                        "pulling"),
-                new IItemPropertyGetter() {
-                    @SideOnly(Side.CLIENT)
-                    public float apply(
-                            ItemStack stack,
-                            @Nullable World worldIn,
-                            @Nullable EntityLivingBase entityIn) {
-                        if (entityIn != null && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack) {
-                            return 1.0F;
-                        } else {
-                            return 0.0F;
-                        }
-                    }
-                });
+                }
+            }
+        };
+        this.addPropertyOverride(pullrl, pullProp);
+
+        ResourceLocation pullingrl = new ResourceLocation("predatorbow", "pulling");
+        IItemPropertyGetter pullingProp = new IItemPropertyGetter() {
+            @SideOnly(Side.CLIENT)
+            public float apply(
+                    ItemStack stack,
+                    @Nullable World worldIn,
+                    @Nullable EntityLivingBase entityIn) {
+                if (entityIn != null && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack) {
+                    return 1.0F;
+                } else {
+                    return 0.0F;
+                }
+            }
+        };
+        this.addPropertyOverride(pullingrl, pullingProp);
+
         type = ArrowType.NORMAL;
+        overriddenAttackPower = 10;
+        overriddenArrowVelocity = 7;
+        overriddenKnockBackWeight = 4;
     }
 
     /**
@@ -246,14 +289,15 @@ public class Item_PredatorBow extends Item {
                 player.rotationPitch,
                 player.rotationYaw,
                 0.0F,
-                arrowVelocity * 7.0F,
+                arrowVelocity * (float) overriddenArrowVelocity,
                 1.0F);
         if (arrowVelocity >= 1.0F) {
             arrowEntity.setIsCritical(true);
         }
         int powerBoost = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, bowItem);
         if (powerBoost > 0) {
-            arrowEntity.setDamage(arrowEntity.getDamage() + (double) powerBoost * 0.5D + 0.5D);
+            arrowEntity.setDamage(
+                    arrowEntity.getDamage() + (double) powerBoost * 0.5D + 0.5D + (double) overriddenAttackPower);
         }
         int knockBackBoost = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, bowItem);
         if (knockBackBoost > 0) {
@@ -262,6 +306,7 @@ public class Item_PredatorBow extends Item {
         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, bowItem) > 0) {
             arrowEntity.setFire(100);
         }
+        arrowEntity.SetKnockBackWeight(overriddenKnockBackWeight);
         return arrowEntity;
     }
 
